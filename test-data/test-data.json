@@ -1,0 +1,27 @@
+{
+  "users": {
+    "validUser": {
+      "username": "testuser@example.com",
+      "password": "TestPassword123"
+    },
+    "invalidUser": {
+      "username": "invalid@example.com",
+      "password": "wrongpassword"
+    }
+  },
+  "urls": {
+    "baseUrl": "https://example.com",
+    "loginUrl": "https://example.com/login",
+    "homeUrl": "https://example.com/home"
+  },
+  "messages": {
+    "welcomeMessage": "Welcome to the application!",
+    "loginError": "Invalid username or password",
+    "loginSuccess": "Login successful"
+  },
+  "timeouts": {
+    "short": 5000,
+    "medium": 10000,
+    "long": 30000
+  }
+}
