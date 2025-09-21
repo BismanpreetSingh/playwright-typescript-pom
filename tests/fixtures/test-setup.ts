@@ -1,11 +1,13 @@
 import { test as base } from '@playwright/test';
 import { LoginPage } from '../../src/pages/LoginPage';
 import { HomePage } from '../../src/pages/HomePage';
+import { NetworkUtils } from '../../src/utils/network-utils';
 
 // Extend the base test with page objects
 type TestFixtures = {
   loginPage: LoginPage;
   homePage: HomePage;
+  networkUtils: NetworkUtils;
 };
 
 export const test = base.extend<TestFixtures>({
@@ -17,6 +19,11 @@ export const test = base.extend<TestFixtures>({
   homePage: async ({ page }, use) => {
     const homePage = new HomePage(page);
     await use(homePage);
+  },
+
+  networkUtils: async ({ page }, use) => {
+    const networkUtils = new NetworkUtils(page);
+    await use(networkUtils);
   },
 });
 

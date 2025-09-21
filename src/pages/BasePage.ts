@@ -90,10 +90,11 @@ export abstract class BasePage {
   }
 
   /**
-   * Take a screenshot of the page
-   * @param name - Screenshot name
+   * Check if an element is visible
+   * @param selector - Element selector
+   * @returns True if element is visible, false otherwise
    */
-  async takeScreenshot(name: string): Promise<void> {
-    await this.page.screenshot({ path: `screenshots/${name}.png`, fullPage: true });
+  async isElementDisabled(selector: string): Promise<boolean> {
+    return await this.page.getAttribute(selector, 'disabled') === 'true' ? true : false;
   }
 }

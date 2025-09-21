@@ -1,8 +1,8 @@
 {
   "users": {
     "validUser": {
-      "username": "testuser@example.com",
-      "password": "TestPassword123"
+      "username": "pictor.newqa.guest@pictorlabs.ai",
+      "password": "AZgzAKG77vR!Ep8"
     },
     "invalidUser": {
       "username": "invalid@example.com",
@@ -10,14 +10,11 @@
     }
   },
   "urls": {
-    "baseUrl": "https://example.com",
-    "loginUrl": "https://example.com/login",
-    "homeUrl": "https://example.com/home"
+    "baseUrl": "https://3c19b683.prism-app.pages.dev"
   },
   "messages": {
-    "welcomeMessage": "Welcome to the application!",
-    "loginError": "Invalid username or password",
-    "loginSuccess": "Login successful"
+    "warningMessage": "Warning: You are logged into a demo account. Some functionality (slide upload, manual stain ordering, slide download) is not available in this mode. Please contact support@pictorlabs.ai with any questions.",
+    "loginError": "Wrong email or password"
   },
   "timeouts": {
     "short": 5000,

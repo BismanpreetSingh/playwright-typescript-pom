@@ -3,11 +3,13 @@ import { BasePage } from './BasePage';
 
 export class LoginPage extends BasePage {
   // Page selectors
-  private readonly usernameInput = '#username';
-  private readonly passwordInput = '#password';
-  private readonly loginButton = '#login-button';
-  private readonly errorMessage = '.error-message';
-  private readonly loginForm = '.login-form';
+  private readonly usernameInput = '#username-label';
+  private readonly passwordInput = '#password-label';
+  private readonly continueButton = '//button[text()="Continue"]';
+  private readonly errorMessage = '#error-element-password';
+  private readonly signInButton = '//p[text()="Sign In"]';
+  private readonly errorMessageUserNameEmpty = '#error-cs-username-required';
+  private readonly errorMessagePasswordEmpty = '#error-cs-password-required';
 
   constructor(page: Page) {
     super(page);
@@ -42,9 +44,9 @@ export class LoginPage extends BasePage {
   /**
    * Click the login button
    */
-  async clickLoginButton(): Promise<void> {
-    await this.waitForElement(this.loginButton);
-    await this.clickElement(this.loginButton);
+  async clickContinueButton(): Promise<void> {
+    await this.waitForElement(this.continueButton);
+    await this.clickElement(this.continueButton);
   }
 
   /**
@@ -55,26 +57,19 @@ export class LoginPage extends BasePage {
   async login(username: string, password: string): Promise<void> {
     await this.enterUsername(username);
     await this.enterPassword(password);
-    await this.clickLoginButton();
-  }
-
-  /**
-   * Get error message text
-   * @returns The error message text
-   */
-  async getErrorMessage(): Promise<string> {
-    if (await this.isElementVisible(this.errorMessage)) {
-      return await this.getText(this.errorMessage);
-    }
-    return '';
+    await this.clickContinueButton();
   }
 
   /**
    * Check if login form is visible
    * @returns True if login form is visible
    */
-  async isLoginFormVisible(): Promise<boolean> {
-    return await this.isElementVisible(this.loginForm);
+  async isSignInButtonVisible(): Promise<boolean> {
+    return await this.isElementVisible(this.signInButton);
+  }
+
+  async clickOnSignInButton(): Promise<void> {
+     await this.clickElement(this.signInButton);
   }
 
   /**
@@ -83,5 +78,21 @@ export class LoginPage extends BasePage {
    */
   async isErrorMessageDisplayed(): Promise<boolean> {
     return await this.isElementVisible(this.errorMessage);
+  }
+
+  /**
+   * Check if error message is displayed When username is empty
+   * @returns True if error message is displayed
+   */
+  async isErrorMessageDisplayedForEmptyUsername(): Promise<boolean> {
+    return await this.isElementVisible(this.errorMessageUserNameEmpty);
+  }
+
+  /**
+   * Check if error message is displayed When password is empty
+   * @returns True if error message is displayed
+   */
+  async isErrorMessageDisplayedForEmptyPassword(): Promise<boolean> {
+    return await this.isElementVisible(this.errorMessagePasswordEmpty);
   }
 }
