@@ -2,9 +2,11 @@ import { test, expect } from '../fixtures/test-setup';
 import * as testData from '../../test-data/test-data.json';
 
 test.describe('Home Page Functionality with Network Verification', () => {
-    test.beforeEach(async ({ page, loginPage, networkUtils }) => {
+    test.beforeEach(async ({ page, loginPage, networkUtils, consoleUtils }) => {
         // Clear network logs before each test
         networkUtils.clearNetworkLogs();
+        // Clear console messages before each test
+        consoleUtils.clearMessages();
 
         // Navigate to the application and perform login
         await page.goto(testData.urls.baseUrl);
@@ -19,7 +21,8 @@ test.describe('Home Page Functionality with Network Verification', () => {
 
     test('should have navigation menu visible - Network Verified', async ({
         homePage,
-        networkUtils
+        networkUtils,
+        consoleUtils
     }) => {
         await homePage.waitForPageLoad();
 
@@ -43,12 +46,18 @@ test.describe('Home Page Functionality with Network Verification', () => {
         // Verify at least one successful response
         const successfulResponses = allResponses.filter(res => res.status() < 400);
         expect(successfulResponses.length).toBeGreaterThan(0);
+
+        // Console Verification: Check for any console errors
+        const consoleMessages = consoleUtils.getMessages();
+        const consoleErrors = consoleMessages.filter(msg => msg.type() === 'error');
+        expect(consoleErrors.length).toBe(0);
     });
 
     test('should allow user to logout successfully - Network Verified', async ({
         loginPage,
         homePage,
-        networkUtils
+        networkUtils,
+        consoleUtils
     }) => {
         // Verify user is logged in
         expect(await homePage.isUserLoggedIn()).toBe(true);
@@ -74,11 +83,17 @@ test.describe('Home Page Functionality with Network Verification', () => {
 
         const logoutResponse = logoutResponses[0];
         expect(logoutResponse.status()).toBe(302);
+
+        // Console Verification: Check for any console errors
+        const consoleMessages = consoleUtils.getMessages();
+        const consoleErrors = consoleMessages.filter(msg => msg.type() === 'error');
+        expect(consoleErrors.length).toBe(0);
     });
 
     test('verify the Types of Stains Present - Network Verified', async ({
         homePage,
-        networkUtils
+        networkUtils,
+        consoleUtils
     }) => {
         await homePage.waitForPageLoad();
 
@@ -115,11 +130,17 @@ test.describe('Home Page Functionality with Network Verification', () => {
         // Verify successful responses exist
         const successfulResponses = allResponses.filter(res => res.status() < 400);
         expect(successfulResponses.length).toBeGreaterThan(0);
+
+        // Console Verification: Check for any console errors
+        const consoleMessages = consoleUtils.getMessages();
+        const consoleErrors = consoleMessages.filter(msg => msg.type() === 'error');
+        expect(consoleErrors.length).toBe(0);
     });
 
     test.fail('should order stains for BrightField - Network Verified', async ({
         homePage,
-        networkUtils
+        networkUtils,
+        consoleUtils
     }) => {
         await homePage.waitForPageLoad();
 
@@ -146,5 +167,10 @@ test.describe('Home Page Functionality with Network Verification', () => {
 
         const orderResponse = orderResponses[0];
         expect(orderResponse.status()).toBe(200);
+
+        // Console Verification: Check for any console errors
+        const consoleMessages = consoleUtils.getMessages();
+        const consoleErrors = consoleMessages.filter(msg => msg.type() === 'error');
+        expect(consoleErrors.length).toBe(0);
     });
 });
